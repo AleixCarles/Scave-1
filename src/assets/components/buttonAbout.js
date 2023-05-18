@@ -7,7 +7,7 @@ export class AboutButton extends Button {
 
     doClick() {
 
-        window.open('https://github.com/AleixCarles/Scave-I.git', '_blank');
+        window.open('https://github.com/AleixCarles/Scave-1.git', '_blank');
     }
 
 }
