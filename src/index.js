@@ -30,6 +30,8 @@ class Scene3 extends Phaser.Scene {
         // Even though we load the tilesheet with the spike image, we need to
         // load the Spike image separately for Phaser 3 to render it
         this.load.image('spike2', 'assets/images/spike.png');
+        this.load.image('vampiro', 'assets/images/vampiro.png');
+        this.load.image('vampiro2', 'assets/images/vampiro2.png');
         // Load the export Tiled JSON
         this.load.tilemapTiledJSON('map2', 'assets/tilemaps/level2.json');
         // Load player animations from the player spritesheet and atlas JSON
@@ -50,7 +52,6 @@ class Scene3 extends Phaser.Scene {
     }
 
     create() {
-        sound_background.stop();
 
 
 
@@ -118,7 +119,7 @@ class Scene3 extends Phaser.Scene {
         this.anims.create({
             key: 'portalanimation2',
             frames: this.anims.generateFrameNumbers('portal2', {start: 0, end: 7}),
-            frameRate: 10,
+            frameRate: 2,
             repeat: -1,
             yoyo: true,
         });
@@ -154,7 +155,7 @@ class Scene3 extends Phaser.Scene {
         }, null, this);
 
         this.physics.add.collider(this.portal1, platforms);
-        this.physics.add.overlap(this.portal1, this.player, canviEscena2.bind(this));
+        this.physics.add.overlap(this.portal1, this.player, canviEscena3.bind(this));
 
         this.physics.add.collider(this.miSprite2, platforms);
         this.physics.add.collider(this.miSprite3, platforms);
@@ -228,9 +229,15 @@ class Scene3 extends Phaser.Scene {
 
         // Crear el efecto de sonido
         sound_coin = this.sound.add('coinSound');
-        sound_background = this.sound.add('backgroundSound', {loop: true});
-        sound_background.volume = 0.1
-        sound_background.play();
+
+
+
+        this.vampiro = this.physics.add.sprite(740, 300, 'vampiro');
+        this.vampiro.setScale(0.2, 0.2);
+        this.physics.add.collider(this.vampiro, platforms);
+        this.physics.add.overlap(this.player, this.vampiro, playerHitEnemy, null, this);
+
+
         function aumentarPuntaje(sprite) {
             score++;
             scoreText.setText(score.toString());
@@ -372,6 +379,45 @@ class Scene4 extends Phaser.Scene {
         // Lógica de actualización de la escena 4
     }
 }
+class Scene5 extends Phaser.Scene {
+    constructor() {
+        super({key: 'Scene5'});
+        this.playButton = new PlayButton(this);
+        this.aboutButton = new AboutButton(this);
+
+    }
+
+
+    preload() {
+        // Carga los recursos necesarios para la escena 4
+        this.load.image('background1', 'assets/images/Background_scene1.png');
+        this.load.image('victory', 'assets/images/victory.png');
+        this.load.spritesheet('playbutton', 'assets/images/playbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.spritesheet('aboutbutton', 'assets/images/aboutbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.audio('backgroundSound1', 'assets/audio/sound_background.mp3');
+
+    }
+
+    create() {
+
+        // Configuración inicial de la escena 4
+        const backgroundImage1 = this.add.image(0, 0, 'background1').setOrigin(0, 0);
+        backgroundImage1.setScale(1, 1.5);
+        const victory = this.add.image(410, 400, 'victory')
+        victory.setScale(0.5, 0.5);
+        sound_background = this.sound.add('backgroundSound1', {loop: true});
+        sound_background.volume = 0.1
+        sound_background.play();
+
+        this.playButton.create();
+        this.aboutButton.create();
+
+    }
+
+    update() {
+        // Lógica de actualización de la escena 4
+    }
+}
 
 class Scene2 extends Phaser.Scene {
 
@@ -482,13 +528,13 @@ class Scene2 extends Phaser.Scene {
         this.anims.create({
             key: 'portalanimation',
             frames: this.anims.generateFrameNumbers('portal', {start: 0, end: 7}),
-            frameRate: 10,
+            frameRate: 2,
             repeat: -1,
             yoyo: true,
         });
         // this.miSprite = this.add.sprite(350, 430, 'bluediamond');
         // this.miSprite2 = this.add.sprite(420, 430, 'bluediamond');
-        this.portal1 = this.physics.add.sprite(880, 150, 'portal');
+        this.portal1 = this.physics.add.sprite(900, 150, 'portal');
         this.miSprite = this.physics.add.sprite(350, 430, 'bluediamond');
         this.miSprite2 = this.physics.add.sprite(420, 430, 'bluediamond');
         this.miSprite3 = this.physics.add.sprite(610, 370, 'bluediamond');
@@ -652,11 +698,20 @@ function canviEscena() {
 }function canviEscena2() {
     this.scene.start('Scene4');
     sound_background.stop();
-
+    lives=3;
+    score=0;
+}
+function canviEscena3() {
+    this.scene.start('Scene5');
+    sound_background.stop();
+    lives=3;
+    score=0;
 }
 
 
 function playerHit(player, spike) {
+
+
     lives--;
     livesText.setText(lives);
 
@@ -678,6 +733,7 @@ function playerHit(player, spike) {
             ease: 'Linear',
             repeat: 5,
         });
+
     } else {
         // Si el jugador no tiene vidas restantes, reiniciar el juego o realizar otra acción
         // Aquí puedes agregar tu lógica para reiniciar el juego, mostrar un mensaje de game over, etc.
@@ -687,8 +743,48 @@ function playerHit(player, spike) {
         lives=3;
         score=0;
     }
+
 }
 
+function playerHitEnemy(player, spike) {
+    if (player.y+50 < this.vampiro.y){
+        this.vampiro.destroy()
+    }
+
+    else{
+        lives--;
+        livesText.setText(lives);
+
+        // Set velocity back to 0
+        player.setVelocity(0, 0);
+        // Put the player back in its original position
+        if (lives > 0) {
+            player.setX(50);
+            player.setY(550);
+            // Use the default `idle` animation
+            player.play('idle', true);
+            // Set the visibility to 0 i.e. hide the player
+            player.setAlpha(0);
+            // Add a tween that 'blinks' until the player is gradually visible
+            let tw = this.tweens.add({
+                targets: player,
+                alpha: 1,
+                duration: 100,
+                ease: 'Linear',
+                repeat: 5,
+            });
+
+        } else {
+            // Si el jugador no tiene vidas restantes, reiniciar el juego o realizar otra acción
+            // Aquí puedes agregar tu lógica para reiniciar el juego, mostrar un mensaje de game over, etc.
+            // Por ejemplo:
+            sound_background.stop();
+            this.scene.start('Scene4');
+            lives=3;
+            score=0;
+        }
+    }
+}
 const config = {
     type: Phaser.AUTO,
     parent: 'game',
@@ -698,7 +794,7 @@ const config = {
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [Scene1,Scene2,Scene3,Scene4],
+    scene: [Scene1,Scene2,Scene3,Scene4,Scene5],
     physics: {
         default: 'arcade',
         arcade: {
