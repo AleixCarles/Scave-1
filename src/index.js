@@ -128,9 +128,9 @@ class Scene3 extends Phaser.Scene {
 
         this.miSprite = this.physics.add.sprite(410, 430, 'bluediamond2');
         this.miSprite2 = this.physics.add.sprite(480, 370, 'bluediamond2');
-        this.miSprite3 = this.physics.add.sprite(610, 370, 'bluediamond2');
-        this.miSprite4 = this.physics.add.sprite(800, 300, 'bluediamond2');
-        this.miSprite5 = this.physics.add.sprite(870, 300, 'bluediamond2');
+        this.miSprite3 = this.physics.add.sprite(680, 300, 'bluediamond2');
+        this.miSprite4 = this.physics.add.sprite(1120, 430, 'bluediamond2');
+        this.miSprite5 = this.physics.add.sprite(930, 430, 'bluediamond2');
         this.portal1.anims.play('portalanimation2');
         this.miSprite.anims.play('bluediamondanimation2');
         this.miSprite2.anims.play('bluediamondanimation2');
@@ -319,6 +319,46 @@ class Scene1 extends Phaser.Scene {
         // Configuración inicial de la escena 4
         const backgroundImage1 = this.add.image(0, 0, 'background1').setOrigin(0, 0);
         backgroundImage1.setScale(1, 1.5);
+        sound_background = this.sound.add('backgroundSound1', {loop: true});
+        sound_background.volume = 0.1
+        sound_background.play();
+
+        this.playButton.create();
+        this.aboutButton.create();
+
+    }
+
+    update() {
+        // Lógica de actualización de la escena 4
+    }
+}
+
+class Scene4 extends Phaser.Scene {
+    constructor() {
+        super({key: 'Scene4'});
+        this.playButton = new PlayButton(this);
+        this.aboutButton = new AboutButton(this);
+
+    }
+
+
+    preload() {
+        // Carga los recursos necesarios para la escena 4
+        this.load.image('background1', 'assets/images/Background_scene1.png');
+        this.load.image('gameover', 'assets/images/gameover.png');
+        this.load.spritesheet('playbutton', 'assets/images/playbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.spritesheet('aboutbutton', 'assets/images/aboutbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.audio('backgroundSound1', 'assets/audio/sound_background.mp3');
+
+    }
+
+    create() {
+
+        // Configuración inicial de la escena 4
+        const backgroundImage1 = this.add.image(0, 0, 'background1').setOrigin(0, 0);
+        backgroundImage1.setScale(1, 1.5);
+        const gameover = this.add.image(410, 400, 'gameover')
+        gameover.setScale(0.3, 0.3);
         sound_background = this.sound.add('backgroundSound1', {loop: true});
         sound_background.volume = 0.1
         sound_background.play();
@@ -610,7 +650,7 @@ function canviEscena() {
     this.scene.start('Scene3');
 
 }function canviEscena2() {
-    this.scene.start('Scene1');
+    this.scene.start('Scene4');
     sound_background.stop();
 
 }
@@ -642,7 +682,10 @@ function playerHit(player, spike) {
         // Si el jugador no tiene vidas restantes, reiniciar el juego o realizar otra acción
         // Aquí puedes agregar tu lógica para reiniciar el juego, mostrar un mensaje de game over, etc.
         // Por ejemplo:
-        gameOver();
+        sound_background.stop();
+        this.scene.start('Scene4');
+        lives=3;
+        score=0;
     }
 }
 
@@ -655,7 +698,7 @@ const config = {
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [Scene1,Scene2,Scene3],
+    scene: [Scene1,Scene2,Scene3,Scene4],
     physics: {
         default: 'arcade',
         arcade: {
