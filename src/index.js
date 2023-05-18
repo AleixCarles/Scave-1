@@ -1,5 +1,5 @@
-import { PlayButton } from '../assets/components/buttonStart';
-import { AboutButton } from '../assets/components/buttonAbout';
+import { PlayButton } from './assets/components/buttonStart';
+import { AboutButton } from './assets/components/buttonAbout';
 
 let score = 0;
 let scoreText;
@@ -23,31 +23,31 @@ class Scene3 extends Phaser.Scene {
 
         // Image layers from Tiled can't be exported to Phaser 3 (as yet)
         // So we add the background image separately
-        this.load.image('background2', 'assets/images/background1.png',);
+        this.load.image('background2', 'src/assets/images/background1.png',);
         // Load the tileset image file, needed for the map to know what
         // tiles to draw on the screen
-        this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
+        this.load.image('tiles', 'src/assets/tilesets/platformPack_tilesheet.png');
         // Even though we load the tilesheet with the spike image, we need to
         // load the Spike image separately for Phaser 3 to render it
-        this.load.image('spike2', 'assets/images/spike.png');
-        this.load.image('vampiro', 'assets/images/vampiro.png');
-        this.load.image('vampiro2', 'assets/images/vampiro2.png');
+        this.load.image('spike2', 'src/assets/images/spike.png');
+        this.load.image('vampiro', 'src/assets/images/vampiro.png');
+        this.load.image('vampiro2', 'src/assets/images/vampiro2.png');
         // Load the export Tiled JSON
-        this.load.tilemapTiledJSON('map2', 'assets/tilemaps/level2.json');
+        this.load.tilemapTiledJSON('map2', 'src/assets/tilemaps/level2.json');
         // Load player animations from the player spritesheet and atlas JSON
-        this.load.atlas('player', 'assets/images/kenney_player.png',
-            'assets/images/kenney_player_atlas.json');
+        this.load.atlas('player', 'src/assets/images/kenney_player.png',
+            'src/assets/images/kenney_player_atlas.json');
         this.load.spritesheet('bluediamond2',
-            'assets/images/blue_diamond-sprites.png',
+            'src/assets/images/blue_diamond-sprites.png',
             {frameWidth: 48, frameHeight: 48}
         );
         this.load.spritesheet('portal2',
-            'assets/images/portal.png',
+            'src/assets/images/portal.png',
             {frameWidth: 250, frameHeight: 300}
         );
-        this.load.audio('coinSound', 'assets/audio/mario-coin.mp3');
-        this.load.audio('backgroundSound', 'assets/audio/sound_background.mp3');
-        this.load.image('heart', 'assets/images/cor.png');
+        this.load.audio('coinSound', 'src/assets/audio/mario-coin.mp3');
+        this.load.audio('backgroundSound', 'src/assets/audio/sound_background.mp3');
+        this.load.image('heart', 'src/assets/images/cor.png');
 
     }
 
@@ -314,10 +314,10 @@ class Scene1 extends Phaser.Scene {
 
     preload() {
         // Carga los recursos necesarios para la escena 4
-        this.load.image('background1', 'assets/images/Background_scene1.png');
-        this.load.spritesheet('playbutton', 'assets/images/playbutton.png', { frameWidth: 190, frameHeight: 49 });
-        this.load.spritesheet('aboutbutton', 'assets/images/aboutbutton.png', { frameWidth: 190, frameHeight: 49 });
-        this.load.audio('backgroundSound1', 'assets/audio/sound_background.mp3');
+        this.load.image('background1', 'src/assets/images/Background_scene1.png');
+        this.load.spritesheet('playbutton', 'src/assets/images/playbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.spritesheet('aboutbutton', 'src/assets/images/aboutbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.audio('backgroundSound1', 'src/assets/audio/sound_background.mp3');
 
     }
 
@@ -351,11 +351,11 @@ class Scene4 extends Phaser.Scene {
 
     preload() {
         // Carga los recursos necesarios para la escena 4
-        this.load.image('background1', 'assets/images/Background_scene1.png');
-        this.load.image('gameover', 'assets/images/gameover.png');
-        this.load.spritesheet('playbutton', 'assets/images/playbutton.png', { frameWidth: 190, frameHeight: 49 });
-        this.load.spritesheet('aboutbutton', 'assets/images/aboutbutton.png', { frameWidth: 190, frameHeight: 49 });
-        this.load.audio('backgroundSound1', 'assets/audio/sound_background.mp3');
+        this.load.image('background1', 'src/assets/images/Background_scene1.png');
+        this.load.image('gameover', 'src/assets/images/gameover.png');
+        this.load.spritesheet('playbutton', 'src/assets/images/playbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.spritesheet('aboutbutton', 'src/assets/images/aboutbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.audio('backgroundSound1', 'src/assets/audio/sound_background.mp3');
 
     }
 
@@ -390,11 +390,11 @@ class Scene5 extends Phaser.Scene {
 
     preload() {
         // Carga los recursos necesarios para la escena 4
-        this.load.image('background1', 'assets/images/Background_scene1.png');
-        this.load.image('victory', 'assets/images/victory.png');
-        this.load.spritesheet('playbutton', 'assets/images/playbutton.png', { frameWidth: 190, frameHeight: 49 });
-        this.load.spritesheet('aboutbutton', 'assets/images/aboutbutton.png', { frameWidth: 190, frameHeight: 49 });
-        this.load.audio('backgroundSound1', 'assets/audio/sound_background.mp3');
+        this.load.image('background1', 'src/assets/images/Background_scene1.png');
+        this.load.image('victory', 'src/assets/images/victory.png');
+        this.load.spritesheet('playbutton', 'src/assets/images/playbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.spritesheet('aboutbutton', 'src/assets/images/aboutbutton.png', { frameWidth: 190, frameHeight: 49 });
+        this.load.audio('backgroundSound1', 'src/assets/audio/sound_background.mp3');
 
     }
 
@@ -433,29 +433,29 @@ class Scene2 extends Phaser.Scene {
 
         // Image layers from Tiled can't be exported to Phaser 3 (as yet)
         // So we add the background image separately
-        this.load.image('background', 'assets/images/background1.png');
+        this.load.image('background', 'src/assets/images/background1.png');
         // Load the tileset image file, needed for the map to know what
         // tiles to draw on the screen
-        this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
+        this.load.image('tiles', 'src/assets/tilesets/platformPack_tilesheet.png');
         // Even though we load the tilesheet with the spike image, we need to
         // load the Spike image separately for Phaser 3 to render it
-        this.load.image('spike', 'assets/images/spike.png');
+        this.load.image('spike', 'src/assets/images/spike.png');
         // Load the export Tiled JSON
-        this.load.tilemapTiledJSON('map', 'assets/tilemaps/level1.json');
+        this.load.tilemapTiledJSON('map', 'src/assets/tilemaps/level1.json');
         // Load player animations from the player spritesheet and atlas JSON
-        this.load.atlas('player', 'assets/images/kenney_player.png',
-            'assets/images/kenney_player_atlas.json');
+        this.load.atlas('player', 'src/assets/images/kenney_player.png',
+            'src/assets/images/kenney_player_atlas.json');
         this.load.spritesheet('bluediamond',
-            'assets/images/blue_diamond-sprites.png',
+            'src/assets/images/blue_diamond-sprites.png',
             {frameWidth: 48, frameHeight: 48}
         );
         this.load.spritesheet('portal',
-            'assets/images/portal.png',
+            'src/assets/images/portal.png',
             {frameWidth: 250, frameHeight: 300}
         );
-        this.load.audio('coinSound', 'assets/audio/mario-coin.mp3');
-        this.load.audio('backgroundSound', 'assets/audio/sound_background.mp3');
-        this.load.image('heart', 'assets/images/cor.png');
+        this.load.audio('coinSound', 'src/assets/audio/mario-coin.mp3');
+        this.load.audio('backgroundSound', 'src/assets/audio/sound_background.mp3');
+        this.load.image('heart', 'src/assets/images/cor.png');
 
     }
 
